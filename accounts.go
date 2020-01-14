@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"log"
 	"net/http"
 )
 
@@ -26,14 +25,11 @@ func AccountsHandler(writer http.ResponseWriter, request *http.Request) {
 			Select()
 
 		if err != nil {
-			writer.WriteHeader(http.StatusInternalServerError)
-			log.Print("Error while querying database => ", err)
-		} else if account.DisplayName != "" {
+			DefaultQueryErrorHandler(err, writer)
+		} else {
 			json, _ := json.Marshal(account)
 			writer.Header().Set("Content-Type", "application/json")
 			writer.Write(json)
-		} else {
-			writer.WriteHeader(http.StatusNotFound)
 		}
 	}
 }
@@ -49,14 +45,11 @@ func AccountDetailHandler(writer http.ResponseWriter, request *http.Request) {
 		Select()
 
 	if err != nil {
-		writer.WriteHeader(http.StatusInternalServerError)
-		log.Print("Error while querying database => ", err)
-	} else if account.DisplayName != "" {
+		DefaultQueryErrorHandler(err, writer)
+	} else {
 		json, _ := json.Marshal(account)
 		writer.Header().Set("Content-Type", "application/json")
 		writer.Write(json)
-	} else {
-		writer.WriteHeader(http.StatusNotFound)
 	}
 }
 
@@ -77,13 +70,10 @@ func AccountAchievementsHandler(writer http.ResponseWriter, request *http.Reques
 	err := query.Select()
 
 	if err != nil {
-		writer.WriteHeader(http.StatusInternalServerError)
-		log.Print("Error while querying database => ", err)
-	} else if achievements != nil {
+		DefaultQueryErrorHandler(err, writer)
+	} else {
 		json, _ := json.Marshal(achievements)
 		writer.Header().Set("Content-Type", "application/json")
 		writer.Write(json)
-	} else {
-		writer.WriteHeader(http.StatusNotFound)
 	}
 }

@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -20,8 +19,7 @@ func GamesHandler(writer http.ResponseWriter, request *http.Request) {
 		Select()
 
 	if err != nil {
-		writer.WriteHeader(http.StatusInternalServerError)
-		log.Print("Error while querying database => ", err.Error())
+		DefaultQueryErrorHandler(err, writer)
 	} else {
 		writer.Header().Set("Content-Type", "application/json")
 		json, _ := json.Marshal(games)
@@ -44,13 +42,10 @@ func GameAchievementsHandler(writer http.ResponseWriter, request *http.Request) 
 		Select()
 
 	if err != nil {
-		writer.WriteHeader(http.StatusInternalServerError)
-		log.Print("Error while querying database => ", err.Error())
-	} else if achievements != nil {
+		DefaultQueryErrorHandler(err, writer)
+	} else {
 		json, _ := json.Marshal(achievements)
 		writer.Header().Set("Content-Type", "application/json")
 		writer.Write(json)
-	} else {
-		writer.WriteHeader(http.StatusNotFound)
 	}
 }

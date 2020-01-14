@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/go-pg/pg/v9"
+	"log"
+	"net/http"
 	"os"
 	"time"
 )
@@ -20,6 +22,16 @@ func init() {
 		Password: password,
 		Database: database,
 	})
+}
+
+func DefaultQueryErrorHandler(err error, writer http.ResponseWriter) {
+
+	if err == pg.ErrNoRows {
+		writer.WriteHeader(http.StatusNotFound)
+	} else {
+		writer.WriteHeader(http.StatusInternalServerError)
+		log.Print("Error while querying database => ", err)
+	}
 }
 
 type Account struct {
