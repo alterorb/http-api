@@ -7,9 +7,9 @@ import (
 )
 
 func RegisterAccountEndpoints(router *mux.Router) {
-	router.HandleFunc("/accounts", AccountsHandler)
-	router.HandleFunc("/accounts/{uuid}", AccountDetailHandler)
-	router.HandleFunc("/accounts/{uuid}/achievements", AccountAchievementsHandler)
+	router.HandleFunc("/accounts", AccountsHandler).Methods(http.MethodGet)
+	router.HandleFunc("/accounts/{uuid}", AccountDetailHandler).Methods(http.MethodGet)
+	router.HandleFunc("/accounts/{uuid}/achievements", AccountAchievementsHandler).Methods(http.MethodGet)
 }
 
 func AccountsHandler(writer http.ResponseWriter, request *http.Request) {

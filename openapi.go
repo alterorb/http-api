@@ -6,7 +6,7 @@ import (
 )
 
 func RegisterSwaggerEndpoints(router *mux.Router) {
-	router.HandleFunc("/openapi.yaml", YamlHandler)
+	router.HandleFunc("/openapi.yaml", YamlHandler).Methods(http.MethodGet)
 }
 
 func YamlHandler(writer http.ResponseWriter, request *http.Request) {

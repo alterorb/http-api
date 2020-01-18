@@ -8,8 +8,8 @@ import (
 )
 
 func RegisterGamesEndpoints(router *mux.Router) {
-	router.HandleFunc("/games", GamesHandler)
-	router.HandleFunc("/games/{id}/achievements", GameAchievementsHandler)
+	router.HandleFunc("/games", GamesHandler).Methods(http.MethodGet)
+	router.HandleFunc("/games/{id}/achievements", GameAchievementsHandler).Methods(http.MethodGet)
 }
 
 func GamesHandler(writer http.ResponseWriter, request *http.Request) {

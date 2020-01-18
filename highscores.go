@@ -7,7 +7,7 @@ import (
 )
 
 func RegisterHighscoresEndpoints(router *mux.Router) {
-	router.HandleFunc("/highscores", HighscoresHandler)
+	router.HandleFunc("/highscores", HighscoresHandler).Methods(http.MethodGet)
 }
 
 func HighscoresHandler(writer http.ResponseWriter, request *http.Request) {
