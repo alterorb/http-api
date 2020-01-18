@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -19,7 +20,7 @@ func BootstrapHttpServer() {
 	RegisterHighscoresEndpoints(router)
 
 	srv := &http.Server{
-		Handler:      router,
+		Handler:      handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(router),
 		Addr:         "0.0.0.0:8080",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
