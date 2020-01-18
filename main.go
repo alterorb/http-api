@@ -16,6 +16,7 @@ func BootstrapHttpServer() {
 	RegisterAccountEndpoints(router)
 	RegisterSwaggerEndpoints(router)
 	RegisterGamesEndpoints(router)
+	RegisterHighscoresEndpoints(router)
 
 	srv := &http.Server{
 		Handler:      router,

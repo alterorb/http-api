@@ -16,8 +16,6 @@ paths:
           required: true
           schema:
             type: string
-            x-oad-type: parameter
-          x-oad-type: parameter
       responses:
         200:
           description: The found AlterOrb account information
@@ -25,16 +23,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
-          x-oad-type: response
         400:
           description: If no `displayName` query parameter was provided.
           content: {}
-          x-oad-type: response
         404:
           description: If no account was found with the given display name.
           content: {}
-          x-oad-type: response
-    x-oad-type: operation
   /accounts/{uuid}:
     get:
       summary: Fetches the detailed account information for the provided uuid
@@ -46,8 +40,6 @@ paths:
           required: true
           schema:
             type: string
-            x-oad-type: parameter
-          x-oad-type: parameter
       responses:
         200:
           description: The account details
@@ -55,12 +47,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
-          x-oad-type: response
         404:
           description: If no account was found with the given uuid
           content: {}
-          x-oad-type: response
-    x-oad-type: operation
   /accounts/{uuid}/achievements:
     get:
       summary: Lists all the achievements that the provided account has
@@ -72,15 +61,11 @@ paths:
           required: true
           schema:
             type: string
-            x-oad-type: parameter
-          x-oad-type: parameter
         - name: gameId
           in: query
           description: Filter the results with the provided gameId
           schema:
             type: string
-            x-oad-type: parameter
-          x-oad-type: parameter
       responses:
         200:
           description: A list of achievements
@@ -90,12 +75,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PlayerAchievement'
-          x-oad-type: response
         404:
           description: If no account was found with the given uuid
           content: {}
-          x-oad-type: response
-    x-oad-type: operation
   /games:
     get:
       summary: Lists all the AlterOrb games, even unsupported ones.
@@ -109,8 +91,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Game'
-          x-oad-type: response
-    x-oad-type: operation
   /games/{id}/achievements:
     get:
       summary: Lists all of the available achievements for a game
@@ -122,8 +102,6 @@ paths:
           required: true
           schema:
             type: string
-            x-oad-type: parameter
-          x-oad-type: parameter
       responses:
         200:
           description: A list of achievements
@@ -133,16 +111,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Achievement'
-          x-oad-type: response
         400:
           description: If the provided game id is not a number
           content: {}
-          x-oad-type: response
         404:
           description: If no game was found with the given id
           content: {}
-          x-oad-type: response
-    x-oad-type: operation
+  /highscores:
+    get:
+      summary: Looks up the top highscores entries depending on the selected mode
+      operationId: highscores
+      parameters:
+        - name: mode
+          in: query
+          description: The highscore lookup mode
+          required: true
+          schema:
+            type: string
+            enum:
+              - orbpoints
+      responses:
+        200:
+          description: A list of entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HighscoresOrbPoints'
+        400:
+          description: If no mode was specified
 components:
   schemas:
     Account:
@@ -153,29 +151,24 @@ components:
           type: string
           description: The player's unique identifier.
           readOnly: true
-          x-oad-type: string
         displayName:
           title: Display name
           type: string
           description: The visible name of the player.
           readOnly: true
-          x-oad-type: string
         orbPoints:
           title: Orb points
           type: integer
           description: The amount of orb points that the player has.
           format: int32
           readOnly: true
-          x-oad-type: integer
         orbCoins:
           title: Orb Coins
           type: integer
           description: The amount of orb coins that the player has.
           format: int32
           readOnly: true
-          x-oad-type: integer
       description: A representation of an AlterOrb player account.
-      x-oad-type: object
     Achievement:
       title: Achievement
       type: object
@@ -186,41 +179,35 @@ components:
           description: The achievement's id.
           format: int32
           readOnly: true
-          x-oad-type: integer
         name:
           title: Name
           type: string
           description: The achievement's name.
           readOnly: true
-          x-oad-type: string
         criteria:
           title: Criteria
           type: string
           description: The achievement's unlock criteria.
           readOnly: true
-          x-oad-type: string
         orbCoins:
           title: Orb Coins
           type: integer
           description: How many orb coins does the achievement awards.
           format: int32
           readOnly: true
-          x-oad-type: integer
         orbPoints:
           title: Orb Points
           type: integer
           description: How many orb points does the achievement awards.
           format: int32
           readOnly: true
-          x-oad-type: integer
         gameId:
           title: Game Id
           type: integer
           description: The id of the game that this achievement belongs to.
           format: int32
-          x-oad-type: integer
+          readOnly: true
       description: A representation of a game achievement.
-      x-oad-type: object
     Game:
       title: Game
       type: object
@@ -231,19 +218,17 @@ components:
           description: The game id
           format: int32
           readOnly: true
-          x-oad-type: integer
         jagexName:
           title: Jagex Name
           type: string
           description: The game's jagex name
-          x-oad-type: string
+          readOnly: true
         prettyName:
           title: Pretty Name
           type: string
           description: The game's pretty name
-          x-oad-type: string
+          readOnly: true
       description: An AlterOrb game
-      x-oad-type: object
     PlayerAchievement:
       title: Player Achievement
       type: object
@@ -254,17 +239,30 @@ components:
           description: The achievement id
           format: int32
           readOnly: true
-          x-oad-type: integer
         gameId:
           title: Game Id
           type: integer
           description: The game id
           format: int32
-          x-oad-type: integer
+          readOnly: true
         unlockTimestamp:
           title: Unlock Timestamp
           type: string
           description: An ISO-8601 timestamp of when the achievement was unlocked
           readOnly: true
-          x-oad-type: string
-      x-oad-type: object
+    HighscoresOrbPoints:
+      title: Highscores OrbPoints
+      type: object
+      properties:
+        display_name:
+          title: Display Name
+          type: string
+          description: The player's display name
+          readOnly: true
+        orb_points:
+          title: Orb Points
+          type: integer
+          description: How many orb points the player has
+          format: int32
+          readOnly: true
+      description: An entry on the highscores using the orbpoints mode
