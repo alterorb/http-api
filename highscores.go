@@ -27,8 +27,8 @@ func HighscoresHandler(writer http.ResponseWriter, request *http.Request) {
 func HighscoresOrbPointsHandler(writer http.ResponseWriter) {
 	var entries []struct {
 		tableName   struct{} `pg:"account"`
-		DisplayName string   `pg:"display_name"`
-		OrbPoints   int      `pg:"orb_points"`
+		DisplayName string   `pg:"display_name" json:"displayName"`
+		OrbPoints   int      `pg:"orb_points" json:"orbPoints"`
 	}
 	err := postgres.Model(&entries).
 		Order("orb_points DESC").

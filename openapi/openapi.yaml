@@ -223,10 +223,10 @@ components:
           type: string
           description: The game's jagex name
           readOnly: true
-        prettyName:
-          title: Pretty Name
+        fancyName:
+          title: Fancy Name
           type: string
-          description: The game's pretty name
+          description: The game's fancy name
           readOnly: true
       description: An AlterOrb game
     PlayerAchievement:
@@ -254,12 +254,12 @@ components:
       title: Highscores OrbPoints
       type: object
       properties:
-        display_name:
+        displayName:
           title: Display Name
           type: string
           description: The player's display name
           readOnly: true
-        orb_points:
+        orbPoints:
           title: Orb Points
           type: integer
           description: How many orb points the player has
