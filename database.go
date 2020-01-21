@@ -43,10 +43,13 @@ type Account struct {
 }
 
 type Game struct {
-	tableName struct{} `pg:"game"`
-	Id        int      `json:"id" pg:"id"`
-	JagexName string   `json:"jagexName" pg:"jagex_name"`
-	FancyName string   `json:"fancyName" pg:"fancy_name"`
+	tableName              struct{} `pg:"game"`
+	Id                     int      `json:"id" pg:"id"`
+	JagexName              string   `json:"jagexName" pg:"jagex_name"`
+	FancyName              string   `json:"fancyName" pg:"fancy_name"`
+	ObtainableAchievements int      `json:"obtainableAchievements" pg:"obtainable_achievements"`
+	ObtainableOrbCoins     int      `json:"obtainableOrbCoins" pg:"obtainable_orb_coins"`
+	ObtainableOrbPoints    int      `json:"obtainableOrbPoints" pg:"obtainable_orb_points"`
 }
 
 type GameAchievement struct {
@@ -57,6 +60,7 @@ type GameAchievement struct {
 	Criteria      string   `json:"criteria" pg:"criteria"`
 	OrbCoins      int      `json:"orbCoins" pg:"orb_coins"`
 	OrbPoints     int      `json:"orbPoints" pg:"orb_points"`
+	Obtainable    bool     `json:"obtainable" pg:"obtainable"`
 }
 
 type PlayerGameAchievement struct {

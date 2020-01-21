@@ -207,6 +207,11 @@ components:
           description: The id of the game that this achievement belongs to.
           format: int32
           readOnly: true
+        obtainable:
+          title: Obtainable
+          type: boolean
+          description: If this achievement is currently obtainable or not.
+          readOnly: true
       description: A representation of a game achievement.
     Game:
       title: Game
@@ -227,6 +232,21 @@ components:
           title: Fancy Name
           type: string
           description: The game's fancy name
+          readOnly: true
+        obtainableAchievements:
+          title: Obtainable Achievements
+          type: integer
+          description: How many achievements are obtainable in this game
+          readOnly: true
+        obtainableOrbCoins:
+          title: Obtainable Orb Coins
+          type: integer
+          description: How many orb coins can be obtained in this game
+          readOnly: true
+        obtainableOrbPoints:
+          title: Obtainable Orb Points
+          type: integer
+          description: How many orb points can be obtained in this game
           readOnly: true
       description: An AlterOrb game
     PlayerAchievement:
