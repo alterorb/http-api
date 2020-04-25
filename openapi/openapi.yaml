@@ -233,6 +233,11 @@ components:
           type: string
           description: The game's fancy name
           readOnly: true
+        loginEnabled:
+          title: Login Enabled
+          type: boolean
+          description: If login & online services are enabled for this game
+          readOnly: true
         obtainableAchievements:
           title: Obtainable Achievements
           type: integer

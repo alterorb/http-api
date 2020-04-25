@@ -47,6 +47,7 @@ type Game struct {
 	Id                     int      `json:"id" pg:"id"`
 	JagexName              string   `json:"jagexName" pg:"jagex_name"`
 	FancyName              string   `json:"fancyName" pg:"fancy_name"`
+	LoginEnabled           bool     `json:"loginEnabled" pg:"login_enabled"`
 	ObtainableAchievements int      `json:"obtainableAchievements" pg:"obtainable_achievements"`
 	ObtainableOrbCoins     int      `json:"obtainableOrbCoins" pg:"obtainable_orb_coins"`
 	ObtainableOrbPoints    int      `json:"obtainableOrbPoints" pg:"obtainable_orb_points"`
